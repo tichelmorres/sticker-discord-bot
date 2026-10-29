@@ -34,13 +34,18 @@ async fn main() {
         .setup(move |ctx, _ready, framework| {
             Box::pin(async move {
                 let dev_guild_id = serenity::GuildId::from(guild_id);
+                serenity::Command::set_global_commands(
+                    ctx,
+                    Vec::<serenity::CreateCommand>::new(),
+                )
+                    .await?;
 
                 poise::builtins::register_in_guild(
                     ctx,
                     &framework.options().commands,
                     dev_guild_id,
                 )
-                .await?;
+                    .await?;
                 Ok(Data {})
             })
         })
